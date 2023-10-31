@@ -1,5 +1,5 @@
-#include "user.h"
 #include <iostream>
+#include "user.h"
 
 using namespace std;
 
@@ -31,7 +31,6 @@ void User::set_parameters(float temperature, float humidity, float soil_moisture
                              << " H:"   << setHum 
                              << " S_H:" << setSoilH 
                              << " L:"   << setLight << endl;
-
 }
 
 bool User::login(string userpass){
@@ -41,7 +40,7 @@ bool User::login(string userpass){
         cout << "ACCESS GRANTED!" << endl;
 
         return true;
-        
+
     } else {
         cout << "ACCESS DENIED!" << endl;
 

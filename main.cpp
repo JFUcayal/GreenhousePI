@@ -3,10 +3,10 @@
 #include <string>
 
 #include "user.h"
+#include "sensors.h"
 #include "actuators.h"
 
 using namespace std;
-
 
 int main(){
 
@@ -14,12 +14,16 @@ int main(){
     string name = "antonio";
     string pass = "123";
 
+    //Login verification
     if(admin.login(pass)){
 
+        //new parameters
         admin.set_parameters(25, 50, 50, true);
 
-        Actuators bomba_agua("bomba_H20", false);
-        bomba_agua.get_Actuators_State();
+        Actuators bomba_agua1("bomba_rega", false);
+        bomba_agua1.get_Actuators_State();
+
+        LDR_Sensor light1(void);
     }
 
     return 0;
