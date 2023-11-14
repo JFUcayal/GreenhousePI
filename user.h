@@ -17,6 +17,4 @@ class User{
         bool login(string userpass);
 };
 
-
-
 #endif

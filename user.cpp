@@ -4,15 +4,15 @@
 using namespace std;
 
 User::User(){
-    cout << "**************************" << endl;
-    cout << "User construido" << endl ;
+    cout << "****************************************" << endl;
+    cout << "User Created" << endl ;
     name = "admin";
     pass = "123";
 }
 
 User::~User(){
-    cout << "**************************" << endl;
-    cout << "User destruido" << endl;
+    cout << "****************************************" << endl;
+    cout << "User Destroyed" << endl;
 }
 
 void User::set_parameters(float temperature, float humidity, float soil_moisture, bool light){
@@ -26,7 +26,7 @@ void User::set_parameters(float temperature, float humidity, float soil_moisture
     setSoilH = soil_moisture;
     setLight = light;
 
-    cout << "**************************" << endl;
+    cout << "****************************************" << endl;
     cout << "New Values -> " << "T:"   << setTemp 
                              << " H:"   << setHum 
                              << " S_H:" << setSoilH 
@@ -35,7 +35,7 @@ void User::set_parameters(float temperature, float humidity, float soil_moisture
 
 bool User::login(string userpass){
 
-    cout << "**************************" << endl;
+    cout << "****************************************" << endl;
     if(userpass == pass){
         cout << "ACCESS GRANTED!" << endl;
 

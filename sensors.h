@@ -4,14 +4,17 @@
 #include <iostream>
 #include <string>
 
-#define ARRAY_SIZE 10
+#include "buff.h"
+
+#define SAMPLE_SIZE 10 //10 values for average Temp/Hum calculations
 
 using namespace std;
 
 class Temp_Hum_Sensor{
     private:
         float temperature, humidity;
-        float avg_temp[ARRAY_SIZE], avg_humidity[ARRAY_SIZE];
+        Avg_buff temp_sample_buff;
+        Avg_buff hum_sample_buff;
 
     public:
         Temp_Hum_Sensor();
@@ -28,13 +31,12 @@ class LDR_Sensor{
         LDR_Sensor();
         ~LDR_Sensor();
         float get_brightness_value();
-
 };
 
 class Soil_Hum_Sensor{
     private:
         float soil_moisture;
-        float avg_soil_moisture[ARRAY_SIZE];
+        Avg_buff soilH_sample_buff;
     public:
         Soil_Hum_Sensor();
         ~Soil_Hum_Sensor();
