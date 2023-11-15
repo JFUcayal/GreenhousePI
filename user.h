@@ -15,6 +15,7 @@ class User{
         ~User();
         void set_parameters(float temperature, float humidity, float soil_moisture, bool light);
         bool login(string userpass);
+        void sign_up(string name, string pass, int ID);
 };
 
 #endif

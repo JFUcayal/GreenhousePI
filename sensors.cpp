@@ -178,6 +178,9 @@ Soil_Hum_Sensor::~Soil_Hum_Sensor(){
 
 float Soil_Hum_Sensor::get_soil_moisture(){
     //ADC value
+    float sample_soil_h;
+
+    return sample_soil_h;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -194,6 +197,10 @@ LDR_Sensor::~LDR_Sensor(){
 
 float LDR_Sensor::get_brightness_value(){
     //ADC value
+
+    float sample_bright;
+
+    return sample_bright;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -209,5 +216,7 @@ Water_Level_Sensor::~Water_Level_Sensor(){
 }
 
 float Water_Level_Sensor::get_water_level(){
+    float sample_water_level;
 
+    return sample_water_level;
 }

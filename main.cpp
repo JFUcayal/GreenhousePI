@@ -3,6 +3,7 @@
 #include <string>
 #include <unistd.h>
 
+#include "system.h"
 #include "user.h"
 #include "sensors.h"
 #include "actuators.h"
@@ -11,9 +12,15 @@ using namespace std;
 
 int main(){
 
+    System local_sys;
+    
+    local_sys.get_time();
+
     User admin;
+
     string name = "admin";
     string pass = "123";
+
 
     //Login verification
     if(admin.login(pass)){
@@ -34,8 +41,6 @@ int main(){
             sensor_temp.get_Humidity();
             sleep(2);
         }
-        
-        
     }
 
     return 0;
