@@ -18,10 +18,3 @@ System::~System(){
 void System::data_processing(){
     
 }
-
-uint16_t adc_convert(){
-    static uint16_t adc_value;
-
-
-    return adc_value;
-}

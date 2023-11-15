@@ -22,7 +22,6 @@ class System{
         System();
         ~System();
         void data_processing();
-        uint16_t adc_convert();
 };
 
 

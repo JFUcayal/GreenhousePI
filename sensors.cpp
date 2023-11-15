@@ -77,24 +77,26 @@ float Temp_Hum_Sensor::get_Temperature(){
 
     close(i2c_file);
 
-    //Concatenation of temp value -> MSByte(tempbuff[0] shifted 8 bits to the left followed by ORL with LSByte(temp_buff[1]))
-    auxTemp = (temp_buff[0] << 8 | temp_buff[1]);  
-    sample_temperature = (175.72 * auxTemp / 65536.0) - 46.85;
-
-    cout << "****************************************" << endl;
-    cout << "Sample Temperature: " << sample_temperature << "°C" << endl;
-
-    //store sample value in array for future average calculations
-    temp_sample_buff.push(sample_temperature);
-    cout << "******** TEMP BUFFER PRINT ********" << endl;
-    temp_sample_buff.print_buff();
 
     //signal when buffer is full for calculation
-    if(temp_sample_buff.check_full()){
+    if(temp_sample_buff.check_full() == 1){
 
         //Conditional variable for ref calc -> send temp_sample_buf to system
         
     } else {
+
+        //Concatenation of temp value -> MSByte(tempbuff[0] shifted 8 bits to the left followed by ORL with LSByte(temp_buff[1]))
+        auxTemp = (temp_buff[0] << 8 | temp_buff[1]);  
+        sample_temperature = (175.72 * auxTemp / 65536.0) - 46.85;
+
+        cout << "****************************************" << endl;
+        cout << "Sample Temperature: " << sample_temperature << "°C" << endl;
+
+        //store sample value in array for future average calculations
+        temp_sample_buff.push(sample_temperature);
+        cout << "******** TEMP BUFFER PRINT ********" << endl;
+        temp_sample_buff.print_buff();
+
         cout << "****************************************" << endl;
         cout << "Temperature value added to array!" << endl;
     }
@@ -131,24 +133,28 @@ float Temp_Hum_Sensor::get_Humidity(){
 
     close(i2c_file);
 
-    //Concatenation of temp value -> MSByte(tempbuff[0] shifted 8 bits to the left followed by ORL with LSByte(temp_buff[1]))
-    auxHum = (temp_buff[0] << 8 | temp_buff[1]);  
-    sample_humidity = (125.0 * auxHum / 65536.0) - 6.0;
-
-    cout << "****************************************" << endl;
-    cout << "Sample Humidity: " << sample_humidity << "%" << endl;
-
-    //store sample value in array for future average calculations
-    hum_sample_buff.push(sample_humidity);
-    cout << "******** HUM BUFFER PRINT ********" << endl;
-    hum_sample_buff.print_buff();
+    
 
     //signal when buffer is full for calculation
-    if(hum_sample_buff.check_full()){
+    if(hum_sample_buff.check_full() == 1){
 
         //Conditional variable for ref calc -> send hum_sample_buf to system
+        cout << "buffer ready for calculation! " << endl;
 
     } else {
+
+        //Concatenation of temp value -> MSByte(tempbuff[0] shifted 8 bits to the left followed by ORL with LSByte(temp_buff[1]))
+        auxHum = (temp_buff[0] << 8 | temp_buff[1]);  
+        sample_humidity = (125.0 * auxHum / 65536.0) - 6.0;
+
+        cout << "****************************************" << endl;
+        cout << "Sample Humidity: " << sample_humidity << "%" << endl;
+
+        //store sample value in array for future average calculations
+        hum_sample_buff.push(sample_humidity);
+        cout << "******** HUM BUFFER PRINT ********" << endl;
+        hum_sample_buff.print_buff();
+
         cout << "****************************************" << endl;
         cout << "Humidity value added to array!" << endl;
     }
@@ -161,39 +167,45 @@ float Temp_Hum_Sensor::get_Humidity(){
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Soil_Hum_Sensor::Soil_Hum_Sensor(){
-
+    cout << "****************************************" << endl;
+    cout << "Soil Humidity Sensor Created! " << endl;
 }
 
 Soil_Hum_Sensor::~Soil_Hum_Sensor(){
-
+    cout << "****************************************" << endl;
+    cout << "Soil Humidity Sensor Destroyed! " << endl;
 }
 
 float Soil_Hum_Sensor::get_soil_moisture(){
-
+    //ADC value
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 LDR_Sensor::LDR_Sensor(){
-
+    cout << "****************************************" << endl;
+    cout << "Light Detection Sensor Created! " << endl;
 }
 
 LDR_Sensor::~LDR_Sensor(){
-
+    cout << "****************************************" << endl;
+    cout << "Light Detection Sensor Created! " << endl;
 }
 
 float LDR_Sensor::get_brightness_value(){
-
+    //ADC value
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Water_Level_Sensor::Water_Level_Sensor(){
-
+    cout << "****************************************" << endl;
+    cout << "Water Level Sensor Created! " << endl;
 }
 
 Water_Level_Sensor::~Water_Level_Sensor(){
-
+    cout << "****************************************" << endl;
+    cout << "Water Level Sensor Destroyed! " << endl;
 }
 
 float Water_Level_Sensor::get_water_level(){
