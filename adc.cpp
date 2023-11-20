@@ -9,7 +9,9 @@
 using namespace std;
 
 //Single Conversion + Mux_default + Gain = 1.024V + Pwr-down single-shot + data_rate default + COMP default
-//#define ADC_DEFAULT_CMD 0b1100010110000011
+//#define ADC_DEFAULT_CMD 0b1100 0101 1000 0011
+
+//Single Conversion + Mux:100 -> AIN0 + Gain = 4.096V + Pwr-down single-shot + data_rate default + COMP default
 #define ADC_DEFAULT_CMD 0b1100001110000011
 
 const char* i2c_device = "/dev/i2c-1";
