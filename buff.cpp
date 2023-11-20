@@ -73,8 +73,7 @@ bool Avg_buff::check_full(){
         cout << "#############################" << endl;
         cout << "BUFFER ISNT FULL!" << endl; 
         return false;
-    }
-        
+    }   
 }
 
 void Avg_buff::print_buff(){

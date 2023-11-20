@@ -9,19 +9,18 @@ Actuators::Actuators(/*string A_name, bool A_state*/){
     //state = A_state;
 
     cout << "****************************************" << endl;
-    cout << "Actuator created: " /*<< name << "-> State: " << state */<< endl; 
+    cout << "Actuator created " << endl; 
 }
 
 Actuators::~Actuators(){
 
     cout << "****************************************" << endl;
-    cout << "Actuator destroyed: " << name << endl; 
+    cout << "Actuator destroyed " << endl; 
 }
 
 bool Actuators::get_Actuators_State(){
 
-    cout << "****************************************" << endl;
-    cout << name <<" -> State: " << state << endl;
+    cout << " -> State: " << state << endl;
 
     return state;
 }

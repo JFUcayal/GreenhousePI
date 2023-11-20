@@ -8,7 +8,6 @@ using namespace std;
 
 class Actuators{
     private:
-        string name;
         bool state;
 
     public:

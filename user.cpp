@@ -52,17 +52,6 @@ bool User::login(string userpass){
 
 void User::sign_up(string sign_name, string sign_pass, int ID){
  
-    //Get local sys ID for verification for signup
     
-    // bool token = false;
-
-    // //verification
-    // if(ID == sys_id){
-    //     token = true;
-    // }
-
-    // if(token){
-    //     //registar user na base de dados
-    // }
     
 }
