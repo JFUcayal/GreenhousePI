@@ -9,7 +9,8 @@
 using namespace std;
 
 //Single Conversion + Mux_default + Gain = 1.024V + Pwr-down single-shot + data_rate default + COMP default
-#define ADC_DEFAULT_CMD 0b1000011110000011
+//#define ADC_DEFAULT_CMD 0b1100010110000011
+#define ADC_DEFAULT_CMD 0b1100001110000011
 
 const char* i2c_device = "/dev/i2c-1";
 int i2c_file;          //file descriptor -> open i2c file in Read/Write mode
@@ -99,7 +100,7 @@ uint16_t get_adc_value(uint8_t channel){
 int main(){
 
     for(int i=0; i< 10; i++){
-        get_adc_value(0);
+        get_adc_value(1);
         sleep(1);
     }
     
