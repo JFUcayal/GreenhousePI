@@ -12,11 +12,13 @@
 #include "Database.h"
 #include "admin.h"
 
-
 using namespace std;
 
-
 int main(){
+
+    //init commands
+    system("modprobe i2c-dev");
+    system("modprobe i2c-bcm2835");
 
     System local_sys;
     local_sys.get_time();
@@ -41,6 +43,7 @@ int main(){
         //Greenhouse_Database.deleteAllData();
         //Greenhouse_Database.showAllData();
         
+
         Actuators bomba_agua1;
 
         bomba_agua1.set_Actuators_State(true);

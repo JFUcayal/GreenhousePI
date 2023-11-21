@@ -3,10 +3,9 @@
 
 using namespace std;
 
-Actuators::Actuators(/*string A_name, bool A_state*/){
+Actuators::Actuators(){
 
-    //name = A_name;
-    //state = A_state;
+    state = false;
 
     cout << "****************************************" << endl;
     cout << "Actuator created " << endl; 
@@ -20,7 +19,7 @@ Actuators::~Actuators(){
 
 bool Actuators::get_Actuators_State(){
 
-    cout << " -> State: " << state << endl;
+    cout << "Actuator -> State: " << state << endl;
 
     return state;
 }

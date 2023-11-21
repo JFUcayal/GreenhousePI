@@ -8,10 +8,10 @@ using namespace std;
 
 class Actuators{
     private:
+        string name;
         bool state;
 
     public:
-        //Actuators(string name, bool state);
         Actuators();
         ~Actuators();
         void set_Actuators_State(bool state);

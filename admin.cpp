@@ -7,10 +7,12 @@
 using namespace std;
 
 Admin::Admin(){
+    cout << "****************************************" << endl;
     cout << "Admin Created" << endl;
 }
 
 Admin::~Admin(){
+    cout << "****************************************" << endl;
     cout << "Admin Destroyed" << endl;
 }
 
