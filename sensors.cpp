@@ -82,7 +82,8 @@ float Temp_Hum_Sensor::get_Temperature(){
     if(temp_sample_buff.check_full() == 1){
 
         //Conditional variable for ref calc -> send temp_sample_buf to system
-        
+        cout << "buffer ready for calculation! " << endl;
+
     } else {
 
         //Concatenation of temp value -> MSByte(tempbuff[0] shifted 8 bits to the left followed by ORL with LSByte(temp_buff[1]))
@@ -169,6 +170,8 @@ float Temp_Hum_Sensor::get_Humidity(){
 Soil_Hum_Sensor::Soil_Hum_Sensor(){
     cout << "****************************************" << endl;
     cout << "Soil Humidity Sensor Created! " << endl;
+
+    soilH_sample_buff.init();
 }
 
 Soil_Hum_Sensor::~Soil_Hum_Sensor(){
@@ -177,8 +180,24 @@ Soil_Hum_Sensor::~Soil_Hum_Sensor(){
 }
 
 float Soil_Hum_Sensor::get_soil_moisture(){
-    //ADC value
-    float sample_soil_h;
+
+    float sample_soil_h;    //ADC value 
+
+    if(soilH_sample_buff.check_full() == 1){
+        //Conditional variable for ref calc -> send soil_sample_buf to system
+        cout << "buffer ready for calculation! " << endl;
+    } else {
+        //AIN0 -> ADC input for soil humidity  
+        sample_soil_h = get_adc_value(0);
+         
+        //store sample value in array for future average calculations
+        soilH_sample_buff.push(sample_soil_h);
+        cout << "******** SOIL BUFFER PRINT ********" << endl;
+        soilH_sample_buff.print_buff();
+
+        cout << "****************************************" << endl;
+        cout << "Soil Humidity value added to array!" << endl;
+    }
 
     return sample_soil_h;
 }
@@ -200,6 +219,9 @@ float LDR_Sensor::get_brightness_value(){
 
     float sample_bright;
 
+    //AIN1 -> ADC input for brightness reading 
+    sample_bright = get_adc_value(1);
+
     return sample_bright;
 }
 
@@ -217,6 +239,7 @@ Water_Level_Sensor::~Water_Level_Sensor(){
 
 float Water_Level_Sensor::get_water_level(){
     float sample_water_level;
+
 
     return sample_water_level;
 }

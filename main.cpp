@@ -15,6 +15,7 @@
 
 using namespace std;
 
+
 int main(){
 
     System local_sys;
@@ -22,8 +23,6 @@ int main(){
 
     const char* dbName = "greenhouse.db";
     Database Greenhouse_Database(dbName);  
-
-    //User admin;
 
     Admin admin1;
 
@@ -49,10 +48,13 @@ int main(){
 
 
         Temp_Hum_Sensor sensor_temp;
+        Soil_Hum_Sensor sensor_soil_h;
 
-        for(int i=0; i<13; i++){
+
+        for(int i=0; i<5; i++){
             sensor_temp.get_Temperature();
             sensor_temp.get_Humidity();
+            sensor_soil_h.get_soil_moisture();
             sleep(2);
         }
     }

@@ -5,6 +5,7 @@
 #include <string>
 
 #include "buff.h"
+#include "adc.h"
 
 #define SAMPLE_SIZE 10 //10 values for average Temp/Hum calculations
 
