@@ -29,7 +29,7 @@ void Actuators::set_Actuators_State(bool set_state){
 }
 
 
-uint8_t reference_calculator(float sample_val, float ref_val, float define_margin){
+uint8_t Actuators::reference_calculator(float sample_val, float ref_val, float define_margin){
     
     static float prev_state = ref_val;  
 
@@ -37,10 +37,12 @@ uint8_t reference_calculator(float sample_val, float ref_val, float define_margi
         prev_state = sample_val;    //update values
         cout << "Above margin ---> Activate cooling system" << endl;
         return 2;   //signal to cool system
+
     } else if(sample_val <= prev_state - define_margin){    //below margin
         prev_state = sample_val;
         cout << "Below margin ---> Activate heating system" << endl;
         return 1;   //signal to heat system
+        
     } else {                                                //in the margin
         cout << "Value respecting margin!" << endl;
         return 0;   //signal to ignore action
@@ -54,3 +56,4 @@ void Actuators::control_Door(bool open){
     } 
 
 }
+

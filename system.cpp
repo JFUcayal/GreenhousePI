@@ -12,29 +12,36 @@ System::System(){
 
 System::~System(){
     cout << "****************************************" << endl;
-    cout << "User Destroyed" << endl ;
+    cout << "System Destroyed" << endl ;
+}
+
+/// @brief start-up sequence
+void System::init(){
+
+     //init commands
+    system("modprobe i2c-dev");
+    system("modprobe i2c-bcm2835");
+    system("date 112123212023.00");
+
+    //criar sensores e atuadores
+    
+    //Temp_Hum_Sensor sensor_temp;
+    //Soil_Hum_Sensor sensor_soil_h;  
 }
 
 /// @brief receber dados e enviar 
-void System::data_processing(){
+void System::process_data(){
     //insert data 
     
 }
 
+
 time_t System::get_time(){
 
     time_t curr_time;
-	curr_time = time(NULL);
+    time(&curr_time);
 
-	char *tm = ctime(&curr_time);
-    cout << "****************************************" << endl;
-	cout << "Time: " << tm;
-	
-	return *tm;
+    return curr_time;
+
 }
 
-int System::get_ID(){
-
-    
-    return ID;
-}

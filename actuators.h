@@ -16,9 +16,9 @@ class Actuators{
         ~Actuators();
         void set_Actuators_State(bool state);
         bool get_Actuators_State();
-        uint8_t reference_Calculator(float sample_val, float ref_val, float define_margin);
+        uint8_t reference_calculator(float sample_val, float ref_val, float define_margin);
         void control_Door(bool open);
-
 };
+
 
 #endif
