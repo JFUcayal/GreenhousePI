@@ -18,6 +18,7 @@ int main(){
 
     local_sys.init();
 
+
     const char* dbName = "greenhouse.db";
     Database Greenhouse_Database(dbName);  
 
@@ -31,26 +32,37 @@ int main(){
     Greenhouse_Database.insertDefineValues(27, 28, 20, false);
 
 
+    float real_time_temp,
+          real_time_a_hum,
+          real_time_s_hum,
+          real_time_light_level, 
+          real_time_water_level;
+
+    sensors_data real_time_values;
+
+    for(int i=0; i<5; i++){
+
+        real_time_values = local_sys.get_sensor_data();
+
+        real_time_temp = real_time_values.temperature;
+        real_time_a_hum = real_time_values.air_humidity;
+        real_time_s_hum = real_time_values.soil_humidity;
+        real_time_light_level = real_time_light_level; 
+        real_time_water_level = real_time_values.water_level;
+
+        sleep(1);
+    }
+
+
+/*
     Actuators bomba_agua1;
 
     bomba_agua1.set_Actuators_State(true);
     bomba_agua1.get_Actuators_State();
-
-
-    Temp_Hum_Sensor sensor_temp;
-    Soil_Hum_Sensor sensor_soil_h;  
-    
-
-
-    for(int i=0; i<5; i++){
-        sensor_temp.get_Temperature();
-        sensor_temp.get_Humidity();
-        sensor_soil_h.get_soil_moisture();
-        sleep(2);
-    }
+*/
 
     return 0;
-
+}
 
 /*   
     //CREATE DATABASE
@@ -107,11 +119,7 @@ int main(){
 
     sqlite3_exec(db, sql5, 0, 0, 0);
 
-
-
-
     sqlite3_close(db);
     return 0;
-*/
-
 }
+*/

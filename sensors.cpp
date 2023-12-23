@@ -9,9 +9,16 @@
 
 using namespace std;
 
-const char* i2c_device = "/dev/i2c-1";
-const int i2c_address = 0x40;            //si7021 addr
+#define THRESHOLD 100
+
 int i2c_file;          //file descriptor -> open i2c file in Read/Write mode
+const char* i2c_device = "/dev/i2c-1";
+
+const int i2c_address = 0x40;            //si7021 addr
+
+const int waterAddr_L = 0x77;
+const int waterAddr_H = 0x78;
+
 
 /// @brief constructor of temp and hum sensor and reset buffers
 Temp_Hum_Sensor::Temp_Hum_Sensor(){
@@ -237,9 +244,86 @@ Water_Level_Sensor::~Water_Level_Sensor(){
     cout << "Water Level Sensor Destroyed! " << endl;
 }
 
-float Water_Level_Sensor::get_water_level(){
-    float sample_water_level;
+int Water_Level_Sensor::get_water_level(){
 
+    unsigned char low_data[8] = {0};
+    unsigned char high_data[12] = {0};
 
-    return sample_water_level;
+    uint32_t touch_val = 0;
+    uint8_t trig_section = 0; 
+
+    int sample_water = 0;
+
+    i2c_file = open(i2c_device, O_RDWR); 
+
+    if(i2c_file == -1){
+        cerr << "#############################" << endl;
+        cerr << "Error opening i2c file!" << endl;
+        return 0;
+    }
+
+    //clear data buffers
+    memset(low_data, 0, sizeof(low_data));
+    memset(high_data, 0, sizeof(high_data));
+
+    if(ioctl(i2c_file, I2C_SLAVE, waterAddr_L) < 0) {
+        cerr << "Erro ao configurar o endereço I2C." << endl;
+        close(i2c_file);
+        exit(1);
+    }
+
+    write(i2c_file, nullptr, 0);  // Start Reading
+
+    usleep(75000);
+
+    if(read(i2c_file, low_data, 8) != 8) {
+        cerr << "Erro ao ler dados do sensor." << endl;
+        close(i2c_file);
+        exit(1);
+    }
+
+    if(ioctl(i2c_file, I2C_SLAVE, waterAddr_H) < 0) {
+        cerr << "Erro ao configurar o endereço I2C." << endl;
+        close(i2c_file);
+        exit(1);
+    }
+
+    write(i2c_file, nullptr, 0);  // Start Reading
+
+    usleep(75000);
+
+    if (read(i2c_file, high_data, 12) != 12) {
+        std::cerr << "Erro ao ler dados do sensor." << std::endl;
+        close(i2c_file);
+        exit(1);
+    }
+
+    usleep(10000);
+
+    for(int i = 0; i < 8; i++) {
+        if (low_data[i] > THRESHOLD) {
+            touch_val |= 1 << i;
+        }
+    }
+
+    for(int i = 0; i < 12; i++) {
+        if (high_data[i] > THRESHOLD) {
+            touch_val |= (uint32_t)1 << (8 + i);
+        }
+    }
+
+    //walk up to the strip that is not in contact with the water
+    while(touch_val & 0x01) {
+        trig_section++;
+        touch_val >>= 1;
+    }
+
+    close(i2c_file);
+
+    sample_water = (trig_section * 5); 
+
+    cout << "Water Level -> " << sample_water << " % " << endl;
+
+    //conversion to percentage -> 20 stripes x 5 -> 100%
+    return sample_water;
 }

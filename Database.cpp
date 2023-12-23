@@ -3,7 +3,6 @@
 #include <sqlite3.h> 
 
 #include "Database.h"
-#include "user.h"
 
 using namespace std;
 

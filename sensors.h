@@ -50,7 +50,7 @@ class Water_Level_Sensor{
     public:
         Water_Level_Sensor();
         ~Water_Level_Sensor();
-        float get_water_level();
+        int get_water_level();
 };
 
 
