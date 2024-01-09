@@ -39,8 +39,10 @@ void Database::insertDefineValues(float define_temperature, float define_humidit
 
    sqlite3_stmt *stmt;
 
-   char* sql = "INSERT INTO DEFINE_VALUES(define_temperature, define_humidity, define_soilHumidity, light) "  \
+   const char* sql = "INSERT INTO DEFINE_VALUES(define_temperature, define_humidity, define_soilHumidity, light) "  \
                "VALUES(?, ?, ?, ?);";
+
+
 
    int rc;
    
@@ -69,7 +71,7 @@ sqlite3_stmt *stmt;
 
 // Verifica se o username existe na tabela USER
     if (username_exist(username)) {
-        char* sql = "UPDATE USER SET name = COALESCE(name, ?), password = COALESCE(password, ?) WHERE username = ?;";
+      const char* sql = "UPDATE USER SET name = COALESCE(name, ?), password = COALESCE(password, ?) WHERE username = ?;";
 
       sqlite3_stmt *stmt;
       
@@ -98,7 +100,7 @@ bool Database::username_exist(string username) {
 
    sqlite3_stmt *stmt;
 
-   char* sql = "SELECT username FROM USER WHERE username = ?;";
+   const char* sql = "SELECT username FROM USER WHERE username = ?;";
    const char *name = nullptr;
 
    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
@@ -141,7 +143,7 @@ void Database::insertUser(string username, bool token){
 
    sqlite3_stmt *stmt;
 
-   char* sql = "INSERT INTO USER(username, token) "  \
+   const char* sql = "INSERT INTO USER(username, token) "  \
                "VALUES(?, ?);";
 
    int rc;
@@ -168,7 +170,7 @@ void Database::insertData(tm sampletime, float avgTemperature, float avgHumidity
 
    sqlite3_stmt *stmt;
 
-   char* sql = "INSERT INTO DATA(sampletime, avgTemperature, avgHumidity, avgSoil_Humidity,avgWater_Level, luminosity_State) "  \
+   const char* sql = "INSERT INTO DATA(sampletime, avgTemperature, avgHumidity, avgSoil_Humidity,avgWater_Level, luminosity_State) "  \
                "VALUES(?, ?, ?, ?, ?, ?);";
 
    int rc;
@@ -243,4 +245,45 @@ void Database::showAllData(string table){
 
 bool Database::login(string username, string password){
 
+    sqlite3_stmt *stmt;
+    const char* sql = "SELECT * FROM USER WHERE username = ?;";
+    int rc;
+
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error preparing statement: " << sqlite3_errmsg(db) << std::endl;
+        return false;
+    }
+
+    // Bind do parâmetro da consulta
+    rc = sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error binding parameter: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_finalize(stmt);
+        return false;
+    }
+
+    // Executar a consulta
+    rc = sqlite3_step(stmt);
+    if (rc == SQLITE_ROW) {
+         // Usuário encontrado, verifique a senha
+         std::string storedPassword(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
+         if (storedPassword == password) {
+            // Senha corresponde, login bem-sucedido
+            std::cout << "Login successful!" << std::endl;
+            sqlite3_finalize(stmt);
+            return true;
+         } else {
+            // Senha não corresponde
+            std::cout << "Incorrect password!" << std::endl;
+            sqlite3_finalize(stmt);
+            return false;
+         }
+    } else {
+        // Usuário não encontrado
+        std::cout << "User not found!" << std::endl;
+        sqlite3_finalize(stmt);
+        return false;
+    }
+    
 }

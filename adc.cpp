@@ -66,7 +66,7 @@ uint16_t get_adc_value(uint8_t channel){
         return 0;       
     }
 
-    usleep(100000);
+    usleep(I2C_DELAY);
 
     //read ADC value -> CONVERSION REG -> get 16-bit value
     if (write(i2c_file_adc, &ADS1115_CONV_REG, 1) != 1) {       
@@ -76,7 +76,7 @@ uint16_t get_adc_value(uint8_t channel){
         return 0;       
     }
     
-    usleep(100000);
+    usleep(I2C_DELAY);
 
     uint8_t adc_buff[2];
 
@@ -91,7 +91,14 @@ uint16_t get_adc_value(uint8_t channel){
 
     adc_value = (adc_buff[0] << 8 | adc_buff[1]);
 
-    cout << "ADC value -> " << adc_value << endl;
+    if(adc_value < 100 || adc_value > 32767){
+        adc_value = 1;
+    }
+
+    //percentage conversion
+    adc_value = ((adc_value * 100)/26000);
+
+    cout << "ADC value -> " << adc_value << " % " << endl;
 
     return adc_value;
 }

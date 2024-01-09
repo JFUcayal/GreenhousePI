@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <cstdint>
 
+#define I2C_DELAY 100000
+
 using namespace std;
 
 void init();

@@ -73,7 +73,7 @@ float Temp_Hum_Sensor::get_Temperature(){
         return 0;       
     }
 
-    usleep(75000);
+    usleep(I2C_DELAY);
 
     if (read(i2c_file, temp_buff, 2) != 2){         //ERR -> 2 bytes not returned
         cerr << "#############################" << endl;
@@ -130,7 +130,7 @@ float Temp_Hum_Sensor::get_Humidity(){
         return 0;       
     }
 
-    usleep(75000);
+    usleep(I2C_DELAY);
 
     if (read(i2c_file, temp_buff, 2) != 2){         //ERR -> 2 bytes not returned
         cerr << "#############################" << endl;
@@ -140,8 +140,6 @@ float Temp_Hum_Sensor::get_Humidity(){
     }
 
     close(i2c_file);
-
-    
 
     //signal when buffer is full for calculation
     if(hum_sample_buff.check_full() == 1){
@@ -153,7 +151,7 @@ float Temp_Hum_Sensor::get_Humidity(){
 
         //Concatenation of temp value -> MSByte(tempbuff[0] shifted 8 bits to the left followed by ORL with LSByte(temp_buff[1]))
         auxHum = (temp_buff[0] << 8 | temp_buff[1]);  
-        sample_humidity = (125.0 * auxHum / 65536.0) - 6.0;
+        sample_humidity = (125.0 * auxHum / 65536.0) - 16.0;
 
         cout << "****************************************" << endl;
         cout << "Sample Humidity: " << sample_humidity << "%" << endl;
@@ -166,8 +164,6 @@ float Temp_Hum_Sensor::get_Humidity(){
         cout << "****************************************" << endl;
         cout << "Humidity value added to array!" << endl;
     }
-
-    
 
     return sample_humidity;
 }
@@ -188,6 +184,7 @@ Soil_Hum_Sensor::~Soil_Hum_Sensor(){
 
 float Soil_Hum_Sensor::get_soil_moisture(){
 
+    uint16_t adcPercent;
     float sample_soil_h;    //ADC value 
 
     if(soilH_sample_buff.check_full() == 1){
@@ -195,8 +192,10 @@ float Soil_Hum_Sensor::get_soil_moisture(){
         cout << "buffer ready for calculation! " << endl;
     } else {
         //AIN0 -> ADC input for soil humidity  
-        sample_soil_h = get_adc_value(0);
+        adcPercent = get_adc_value(0);
          
+        sample_soil_h = static_cast<float>(adcPercent);
+
         //store sample value in array for future average calculations
         soilH_sample_buff.push(sample_soil_h);
         cout << "******** SOIL BUFFER PRINT ********" << endl;
@@ -274,7 +273,7 @@ int Water_Level_Sensor::get_water_level(){
 
     write(i2c_file, nullptr, 0);  // Start Reading
 
-    usleep(75000);
+    usleep(I2C_DELAY);
 
     if(read(i2c_file, low_data, 8) != 8) {
         cerr << "Erro ao ler dados do sensor." << endl;
@@ -290,7 +289,7 @@ int Water_Level_Sensor::get_water_level(){
 
     write(i2c_file, nullptr, 0);  // Start Reading
 
-    usleep(75000);
+    usleep(I2C_DELAY);
 
     if (read(i2c_file, high_data, 12) != 12) {
         std::cerr << "Erro ao ler dados do sensor." << std::endl;
@@ -298,7 +297,7 @@ int Water_Level_Sensor::get_water_level(){
         exit(1);
     }
 
-    usleep(10000);
+    usleep(I2C_DELAY);
 
     for(int i = 0; i < 8; i++) {
         if (low_data[i] > THRESHOLD) {

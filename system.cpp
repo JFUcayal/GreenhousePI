@@ -17,15 +17,16 @@ System::~System(){
 /// @brief start-up sequence
 void System::init(){
 
-     //init commands
+    //init commands
     system("modprobe i2c-dev");
     system("modprobe i2c-bcm2835");
     system("date 112123212023.00"); //substituir pelo RTC
 
-    //criar sensores e atuadores
+    //Retirar define values da database
 
-    //Temp_Hum_Sensor sensor_temp;
-    //Soil_Hum_Sensor sensor_soil_h;  
+    //init comms
+
+    
 }
 
 time_t System::get_time(){
@@ -34,7 +35,6 @@ time_t System::get_time(){
     time(&curr_time);
 
     return curr_time;
-
 }
 
 /// @brief receber dados e enviar 
