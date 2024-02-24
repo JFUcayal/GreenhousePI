@@ -6,6 +6,7 @@
 #include <string>
 #include <sqlite3.h> 
 
+
 using namespace std;
 
 class Database{
@@ -14,25 +15,20 @@ public:
     Database(const char* dbName);       //construtor -> abre Database e vê se conexão foi conseguida
     ~Database();                        //destrutor -> fehca a Database
 
-    void insertData(tm, float, float, float, float, bool);
-    void insertDefineValues(float, float, float, bool);
-    void insertUser(std::string, bool);
+    void insertData(string, float, float, float, float, bool);  //inserir dados lidos pelos sensores
+    void insertDefineValues(float, float, float, bool);         //inserir valores pretendidos na estufa
+    void insertUser(std::string, bool);                         //insere utilizadores
     void signupUser(string, string, string);
     bool username_exist(string);
     void deleteAllData(string);
     void showAllData(string);
-    
+    //float getDefineValues();
+  //  sensors_data getDataValues();
+//    void getDataValues(sensors_data& data);
+//    void getDefineValues(define_data& data);
+    void getDefineValues(float&, float&, float&, bool&);
+    void getDataValues(string&, float&, float&, float&, float&, float&);
     bool login(string, string);
-
-    /*
-        USER.H
-
-        bool login(string userpass);
-        void sign_up(string name, string pass, int ID);
-        void set_parameters(float temperature, float humidity, float soil_moisture, bool light);
-        void add_user(string username, bool token);
-        void remove_user(string username);
-    */
 
 private:
     sqlite3* db;

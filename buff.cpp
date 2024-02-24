@@ -7,13 +7,10 @@ using namespace std;
 
 
 Avg_buff::Avg_buff(){
-    cout << "****************************************" << endl;
-    cout << "Buffer Created!" << endl;
+
 }
 
 Avg_buff::~Avg_buff(){
-    cout << "****************************************" << endl;
-    cout << "Buffer Destroyed!" << endl;
 }
 
 void Avg_buff::init(){

@@ -98,7 +98,7 @@ uint16_t get_adc_value(uint8_t channel){
     //percentage conversion
     adc_value = ((adc_value * 100)/26000);
 
-    cout << "ADC value -> " << adc_value << " % " << endl;
+    //cout << "ADC value -> " << adc_value << " % " << endl;
 
     return adc_value;
 }

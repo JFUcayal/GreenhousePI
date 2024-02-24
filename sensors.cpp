@@ -84,7 +84,11 @@ float Temp_Hum_Sensor::get_Temperature(){
 
     close(i2c_file);
 
+    auxTemp = (temp_buff[0] << 8 | temp_buff[1]);  
+    sample_temperature = (175.72 * auxTemp / 65536.0) - 46.85;
 
+
+    /*
     //signal when buffer is full for calculation
     if(temp_sample_buff.check_full() == 1){
 
@@ -100,6 +104,7 @@ float Temp_Hum_Sensor::get_Temperature(){
         cout << "****************************************" << endl;
         cout << "Sample Temperature: " << sample_temperature << "°C" << endl;
 
+    
         //store sample value in array for future average calculations
         temp_sample_buff.push(sample_temperature);
         cout << "******** TEMP BUFFER PRINT ********" << endl;
@@ -107,8 +112,9 @@ float Temp_Hum_Sensor::get_Temperature(){
 
         cout << "****************************************" << endl;
         cout << "Temperature value added to array!" << endl;
+    
     }
-
+    */
     return sample_temperature;
 }
 
@@ -141,6 +147,10 @@ float Temp_Hum_Sensor::get_Humidity(){
 
     close(i2c_file);
 
+    auxHum = (temp_buff[0] << 8 | temp_buff[1]);  
+    sample_humidity = (125.0 * auxHum / 65536.0) - 16.0;
+
+    /*
     //signal when buffer is full for calculation
     if(hum_sample_buff.check_full() == 1){
 
@@ -156,6 +166,7 @@ float Temp_Hum_Sensor::get_Humidity(){
         cout << "****************************************" << endl;
         cout << "Sample Humidity: " << sample_humidity << "%" << endl;
 
+    
         //store sample value in array for future average calculations
         hum_sample_buff.push(sample_humidity);
         cout << "******** HUM BUFFER PRINT ********" << endl;
@@ -163,8 +174,9 @@ float Temp_Hum_Sensor::get_Humidity(){
 
         cout << "****************************************" << endl;
         cout << "Humidity value added to array!" << endl;
+    
     }
-
+    */
     return sample_humidity;
 }
 
@@ -174,7 +186,7 @@ Soil_Hum_Sensor::Soil_Hum_Sensor(){
     cout << "****************************************" << endl;
     cout << "Soil Humidity Sensor Created! " << endl;
 
-    soilH_sample_buff.init();
+ //   soilH_sample_buff.init();
 }
 
 Soil_Hum_Sensor::~Soil_Hum_Sensor(){
@@ -187,6 +199,11 @@ float Soil_Hum_Sensor::get_soil_moisture(){
     uint16_t adcPercent;
     float sample_soil_h;    //ADC value 
 
+    adcPercent = get_adc_value(0);
+         
+    sample_soil_h = static_cast<float>(adcPercent);
+
+    /*
     if(soilH_sample_buff.check_full() == 1){
         //Conditional variable for ref calc -> send soil_sample_buf to system
         cout << "buffer ready for calculation! " << endl;
@@ -196,6 +213,7 @@ float Soil_Hum_Sensor::get_soil_moisture(){
          
         sample_soil_h = static_cast<float>(adcPercent);
 
+    
         //store sample value in array for future average calculations
         soilH_sample_buff.push(sample_soil_h);
         cout << "******** SOIL BUFFER PRINT ********" << endl;
@@ -203,7 +221,9 @@ float Soil_Hum_Sensor::get_soil_moisture(){
 
         cout << "****************************************" << endl;
         cout << "Soil Humidity value added to array!" << endl;
+    
     }
+    */
 
     return sample_soil_h;
 }
