@@ -1,4 +1,4 @@
-# GreenhousePI
+# GreenhousePi
 Automated greenhouse using Raspberry Pi for embedded and real-time systems class
 
 <p align="left">
