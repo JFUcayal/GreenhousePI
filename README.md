@@ -1,6 +1,10 @@
 # GreenhousePI
 Automated greenhouse using Raspberry Pi for embedded and real-time systems class
 
+<p align="left">
+    <img src="https://skillicons.dev/icons?i=linux,raspberrypi,c,cpp"/>
+</p>
+
 [Check out the document about the project!](docs/main.pdf)
 
 <p align="center">
